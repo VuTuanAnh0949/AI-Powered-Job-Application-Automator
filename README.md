@@ -2,8 +2,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python Version">
+  <img src="https://img.shields.io/badge/react-18.3-blue.svg" alt="React Version">
   <img src="https://img.shields.io/badge/AI-Gemini%20%7C%20Groq-purple.svg" alt="AI Powered">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/version-2.0.0-brightgreen.svg" alt="Version">
 </p>
 
 <p align="center">
@@ -14,6 +16,22 @@
 ---
 
 **AutoApply AI is an intelligent system designed to streamline your job search. It automates finding relevant job postings, crafting personalized resumes and cover letters using AI (Gemini & Groq), and assists with application submissions, helping you land your dream job faster.**
+
+## 🆕 Version 2.0 - Monorepo Architecture
+
+AutoApply AI v2.0 has been completely restructured with modern architecture:
+
+- 🏗️ **Monorepo Structure** - Organized `apps/` and `packages/`
+- 🚀 **FastAPI Backend** - Clean architecture REST API
+- 💎 **React Frontend** - Modern TypeScript UI with Vite
+- 🐳 **Docker Ready** - Full containerization support
+- 📦 **Shared Packages** - Reusable code across services
+
+**📚 Quick Links:**
+- [Hướng dẫn chi tiết (Vietnamese)](HUONG_DAN_V2.md)
+- [Monorepo Structure](MONOREPO_STRUCTURE.md)
+- [Backend Docs](apps/backend/README.md)
+- [Frontend Docs](apps/frontend/README.md)
 
 ---
 

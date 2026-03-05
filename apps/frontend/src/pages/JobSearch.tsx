@@ -1,31 +1,31 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Search, MapPin, Briefcase, ExternalLink } from 'lucide-react'
-import api from '@/lib/api'
-import type { Job, JobSearchParams } from '@/types'
+import { useState } from "react";
+
+import { Search, MapPin, Briefcase, ExternalLink } from "lucide-react";
+import api from "@/lib/api";
+import type { Job, JobSearchParams } from "@/types";
 
 export default function JobSearch() {
   const [searchParams, setSearchParams] = useState<JobSearchParams>({
-    keywords: [''],
-    location: 'Remote',
-    job_site: 'linkedin',
+    keywords: [""],
+    location: "Remote",
+    job_site: "linkedin",
     max_results: 50,
-  })
+  });
 
-  const [searching, setSearching] = useState(false)
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [searching, setSearching] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]);
 
   const handleSearch = async () => {
-    setSearching(true)
+    setSearching(true);
     try {
-      const response = await api.post('/api/v1/jobs/search', searchParams)
-      setJobs(response.data.jobs || [])
+      const response = await api.post("/api/v1/jobs/search", searchParams);
+      setJobs(response.data.jobs || []);
     } catch (error) {
-      console.error('Search failed:', error)
+      console.error("Search failed:", error);
     } finally {
-      setSearching(false)
+      setSearching(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -113,7 +113,7 @@ export default function JobSearch() {
             className="btn-primary w-full flex items-center justify-center gap-2"
           >
             <Search size={18} />
-            {searching ? 'Searching...' : 'Search Jobs'}
+            {searching ? "Searching..." : "Search Jobs"}
           </button>
         </div>
       </div>
@@ -136,14 +136,14 @@ export default function JobSearch() {
             <Search className="mx-auto text-gray-400 mb-4" size={48} />
             <p className="text-gray-600">
               {searching
-                ? 'Searching for jobs...'
-                : 'Start searching to find relevant job opportunities'}
+                ? "Searching for jobs..."
+                : "Start searching to find relevant job opportunities"}
             </p>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function JobCard({ job }: { job: Job }) {
@@ -152,9 +152,14 @@ function JobCard({ job }: { job: Job }) {
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-start gap-3">
-            <Briefcase className="text-primary-600 mt-1 flex-shrink-0" size={20} />
+            <Briefcase
+              className="text-primary-600 mt-1 flex-shrink-0"
+              size={20}
+            />
             <div>
-              <h3 className="font-semibold text-lg text-gray-900">{job.title}</h3>
+              <h3 className="font-semibold text-lg text-gray-900">
+                {job.title}
+              </h3>
               <p className="text-gray-700 font-medium">{job.company}</p>
             </div>
           </div>
@@ -171,7 +176,9 @@ function JobCard({ job }: { job: Job }) {
           {job.match_score && (
             <div className="mt-3">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-gray-700">Match Score:</span>
+                <span className="text-sm font-medium text-gray-700">
+                  Match Score:
+                </span>
                 <div className="flex-1 bg-gray-200 rounded-full h-2 max-w-xs">
                   <div
                     className="bg-primary-600 h-2 rounded-full"
@@ -203,5 +210,5 @@ function JobCard({ job }: { job: Job }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

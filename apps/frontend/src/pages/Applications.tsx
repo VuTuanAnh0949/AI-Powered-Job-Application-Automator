@@ -1,27 +1,25 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Briefcase, Calendar, FileText, Trash2 } from 'lucide-react'
-import api from '@/lib/api'
-import type { Application, ApplicationStatus } from '@/types'
+import { useState } from "react";
+import { Briefcase, Calendar, FileText, Trash2 } from "lucide-react";
+import type { Application, ApplicationStatus } from "@/types";
 
 const statusColors: Record<ApplicationStatus, string> = {
-  draft: 'bg-gray-100 text-gray-800',
-  submitted: 'bg-blue-100 text-blue-800',
-  in_review: 'bg-yellow-100 text-yellow-800',
-  interview: 'bg-purple-100 text-purple-800',
-  rejected: 'bg-red-100 text-red-800',
-  accepted: 'bg-green-100 text-green-800',
-}
+  draft: "bg-gray-100 text-gray-800",
+  submitted: "bg-blue-100 text-blue-800",
+  in_review: "bg-yellow-100 text-yellow-800",
+  interview: "bg-purple-100 text-purple-800",
+  rejected: "bg-red-100 text-red-800",
+  accepted: "bg-green-100 text-green-800",
+};
 
 export default function Applications() {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   // Mock data - replace with real API call
-  const applications: Application[] = []
+  const applications: Application[] = [];
 
   const filterApplications = applications.filter(
-    (app) => !selectedStatus || app.status === selectedStatus
-  )
+    (app) => !selectedStatus || app.status === selectedStatus,
+  );
 
   return (
     <div className="space-y-6">
@@ -47,7 +45,7 @@ export default function Applications() {
           {Object.keys(statusColors).map((status) => (
             <FilterButton
               key={status}
-              label={status.replace('_', ' ')}
+              label={status.replace("_", " ")}
               count={applications.filter((a) => a.status === status).length}
               active={selectedStatus === status}
               onClick={() => setSelectedStatus(status)}
@@ -67,14 +65,14 @@ export default function Applications() {
             <Briefcase className="mx-auto text-gray-400 mb-4" size={48} />
             <p className="text-gray-600">
               {applications.length === 0
-                ? 'No applications yet. Start applying to jobs!'
-                : 'No applications with this status.'}
+                ? "No applications yet. Start applying to jobs!"
+                : "No applications with this status."}
             </p>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }
 
 function FilterButton({
@@ -83,23 +81,23 @@ function FilterButton({
   active,
   onClick,
 }: {
-  label: string
-  count: number
-  active: boolean
-  onClick: () => void
+  label: string;
+  count: number;
+  active: boolean;
+  onClick: () => void;
 }) {
   return (
     <button
       onClick={onClick}
       className={`px-4 py-2 rounded-lg font-medium transition-colors capitalize ${
         active
-          ? 'bg-primary-600 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ? "bg-primary-600 text-white"
+          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
       }`}
     >
       {label} ({count})
     </button>
-  )
+  );
 }
 
 function ApplicationCard({ application }: { application: Application }) {
@@ -116,11 +114,13 @@ function ApplicationCard({ application }: { application: Application }) {
                 statusColors[application.status]
               }`}
             >
-              {application.status.replace('_', ' ')}
+              {application.status.replace("_", " ")}
             </span>
           </div>
 
-          <p className="text-gray-700 font-medium mb-3">{application.company}</p>
+          <p className="text-gray-700 font-medium mb-3">
+            {application.company}
+          </p>
 
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <span className="flex items-center gap-1">
@@ -148,5 +148,5 @@ function ApplicationCard({ application }: { application: Application }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

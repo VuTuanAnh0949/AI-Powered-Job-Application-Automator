@@ -1,5 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
-import { BarChart3, Briefcase, FileText, TrendingUp } from 'lucide-react'
+import { BarChart3, Briefcase, FileText, TrendingUp } from "lucide-react";
 
 export default function Dashboard() {
   // Mock stats - replace with real API call
@@ -8,7 +7,7 @@ export default function Dashboard() {
     inReview: 0,
     interviews: 0,
     successRate: 0,
-  }
+  };
 
   return (
     <div className="space-y-8">
@@ -80,7 +79,7 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function StatCard({ icon, label, value, trend }: any) {
@@ -92,12 +91,10 @@ function StatCard({ icon, label, value, trend }: any) {
           <p className="text-2xl font-bold text-gray-900">{value}</p>
           <p className="text-xs text-gray-500 mt-2">{trend}</p>
         </div>
-        <div className="bg-gray-50 p-3 rounded-lg">
-          {icon}
-        </div>
+        <div className="bg-gray-50 p-3 rounded-lg">{icon}</div>
       </div>
     </div>
-  )
+  );
 }
 
 function QuickAction({ title, description, href, color }: any) {
@@ -109,5 +106,5 @@ function QuickAction({ title, description, href, color }: any) {
       <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
       <p className="text-sm text-gray-600">{description}</p>
     </a>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { FileText, Upload, Download, Eye } from 'lucide-react'
+import { FileText, Upload } from "lucide-react";
 
 export default function Documents() {
   return (
@@ -55,5 +55,5 @@ export default function Documents() {
         </div>
       </div>
     </div>
-  )
+  );
 }

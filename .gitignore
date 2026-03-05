@@ -1,4 +1,6 @@
+# ==========================================
 # Python
+# ==========================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -22,37 +24,59 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.pyc
 
+# ==========================================
 # Virtual Environment
+# ==========================================
 .venv/
 venv/
 ENV/
 env/
 .virtualenv
 
-# IDEs
-.vscode/
+# ==========================================
+# IDEs & Editors
+# ==========================================
 .idea/
 .vs-code/
-.claude/
+.qodo/
 *.swp
 *.swo
 *~
-.qodo/
 
-# Sensitive Data - DO NOT COMMIT!
+# VSCode - Keep settings.json for project config
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Claude AI
+.claude/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+# Ignore all .env files
 .env
 *.env
+.env.local
+.env.*.local
+
+# Except examples
 !.env.example
+!.env.docker.example
+!*.env.example
+
+# App-specific env files
+apps/backend/.env
+apps/frontend/.env
 job_application_automation/.env
 job_application_automation/data/.env
 
-# Personal & Sensitive Information
-job_application_automation/data/candidate_profile.json
-job_application_automation/data/sessions/*.json
-job_application_automation/data/sessions/linkedin_cookies.json
-
+# ==========================================
 # Database Files
+# ==========================================
 *.db
 *.db-shm
 *.db-wal
@@ -61,30 +85,120 @@ job_application_automation/data/sessions/linkedin_cookies.json
 job_application_automation/data/*.db
 job_application_automation/data/vector_indices/
 
-# Logs & State
+# ==========================================
+# Logs & Reports
+# ==========================================
 *.log
 logs/
+data/logs/
 job_application_automation/data/logs/
 job_application_automation/data/*.log
 job_application_automation/data/ats_state.json
 job_application_automation/data/ats_reports/
 
-# Screenshots & Generated Files
+# ==========================================
+# Generated Content
+# ==========================================
 screenshots/
+data/generated_docs/
+data/uploads/
 job_application_automation/data/screenshots/
 job_application_automation/data/generated_cover_letters/
 
-# Job Data
+# ==========================================
+# Sensitive User Data
+# ==========================================
+# Profile data
+job_application_automation/data/candidate_profile.json
+data/candidate_profile.json
+!data/candidate_profile.json.example
+
+# Session data
+job_application_automation/data/sessions/*.json
+job_application_automation/data/sessions/linkedin_cookies.json
+data/sessions/*.json
+
+# Job listings (can be large)
 job_application_automation/data/*job_listings*.json
 job_application_automation/data/combined_job_listings.json
+data/*job_listings*.json
+data/combined_job_listings.json
 
-# OS
+# ==========================================
+# Frontend / Node.js
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+.next/
+out/
+.nuxt/
+.cache/
+
+# Frontend env
+apps/frontend/dist/
+apps/frontend/build/
+apps/frontend/.env
+apps/frontend/.env.local
+
+# ==========================================
+# OS Files
+# ==========================================
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# Temporary Files
-temp.py
+# ==========================================
+# Temporary & Backup Files
+# ==========================================
 *.tmp
+*.temp
 *.bak
 *.swp
+*~
+temp.py
+test_*.py.bak
+
+# ==========================================
+# Docker
+# ==========================================
+.dockerignore
+
+# ==========================================
+# Coverage & Testing
+# ==========================================
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+
+# ==========================================
+# Package Managers
+# ==========================================
+# UV lock files (if not using UV)
+# uv.lock
+
+# ==========================================
+# Project Specific
+# ==========================================
+# Keep startup scripts - they should be committed
+
+*.bat
+*.ps1
+
+# Old codebase folder (if still exists)
+job_application_automation/

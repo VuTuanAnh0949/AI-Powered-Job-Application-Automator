@@ -1,0 +1,26 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\Windows\\.conda\\envs\\ai-powered-job-application-automator\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/apps/backend",
+    "${workspaceFolder}/packages/shared",
+    "${workspaceFolder}/packages/core"
+  ],
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/apps/backend",
+    "${workspaceFolder}/packages/shared",
+    "${workspaceFolder}/packages/core"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/node_modules": true
+  },
+  "css.lint.unknownAtRules": "ignore"
+}

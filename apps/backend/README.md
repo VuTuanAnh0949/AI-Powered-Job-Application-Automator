@@ -40,6 +40,7 @@ python -m app.main
 ```
 
 The API will be available at:
+
 - API: http://localhost:8000
 - Swagger UI: http://localhost:8000/api/docs
 - ReDoc: http://localhost:8000/api/redoc
@@ -73,14 +74,17 @@ apps/backend/
 ## 🔌 API Endpoints
 
 ### Health Check
+
 - `GET /health` - Health check endpoint
 
 ### Jobs (`/api/v1/jobs`)
+
 - `POST /search` - Search for jobs across platforms
 - `GET /{job_id}` - Get job details
 - `POST /{job_id}/analyze` - Analyze job match score
 
 ### Applications (`/api/v1/applications`)
+
 - `GET /` - List all applications
 - `POST /` - Create new application
 - `GET /{id}` - Get application details
@@ -89,6 +93,7 @@ apps/backend/
 - `GET /stats/summary` - Get application statistics
 
 ### Documents (`/api/v1/documents`)
+
 - `POST /resume/generate` - Generate tailored resume
 - `POST /cover-letter/generate` - Generate cover letter
 - `POST /resume/upload` - Upload base resume
@@ -96,6 +101,7 @@ apps/backend/
 - `GET /{id}/preview` - Preview document
 
 ### Profile (`/api/v1/profile`)
+
 - `GET /` - Get user profile
 - `POST /` - Create/update profile
 - `PATCH /skills` - Update skills
@@ -129,6 +135,7 @@ docker run -p 8000:8000 --env-file .env autoapply-backend
 ### Code Style
 
 This project follows:
+
 - PEP 8 style guide
 - Type hints for all functions
 - Docstrings for classes and functions

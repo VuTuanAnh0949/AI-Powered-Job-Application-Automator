@@ -1,0 +1,57 @@
+# Development docker-compose with hot-reload
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: autoapply-db-dev
+    environment:
+      POSTGRES_DB: autoapply_dev
+      POSTGRES_USER: autoapply
+      POSTGRES_PASSWORD: dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - autoapply-dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: autoapply-redis-dev
+    ports:
+      - "6379:6379"
+    networks:
+      - autoapply-dev
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: autoapply-backend-dev
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      DATABASE_URL: postgresql://autoapply:dev_password@postgres:5432/autoapply_dev
+      REDIS_URL: redis://redis:6379
+      ENVIRONMENT: development
+      DEBUG: "true"
+    env_file:
+      - apps/backend/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/backend/app:/app/app
+      - ./packages:/app/packages
+      - ./data:/app/data
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - autoapply-dev
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  autoapply-dev:
+    driver: bridge

@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: autoapply-db
+    environment:
+      POSTGRES_DB: autoapply
+      POSTGRES_USER: autoapply
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-autoapply_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U autoapply"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoapply-network
+
+  # Redis Cache (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: autoapply-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoapply-network
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: autoapply-backend
+    env_file:
+      - apps/backend/.env
+    environment:
+      DATABASE_URL: postgresql://autoapply:${DB_PASSWORD:-autoapply_dev_password}@postgres:5432/autoapply
+      REDIS_URL: redis://redis:6379
+      ENVIRONMENT: production
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./apps/backend/app:/app/app  # For development hot-reload
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - autoapply-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: autoapply-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - autoapply-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    name: autoapply_postgres_data
+  redis_data:
+    name: autoapply_redis_data
+
+networks:
+  autoapply-network:
+    name: autoapply-network
+    driver: bridge
