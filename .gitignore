@@ -1,0 +1,90 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+.virtualenv
+
+# IDEs
+.vscode/
+.idea/
+.vs-code/
+.claude/
+*.swp
+*.swo
+*~
+.qodo/
+
+# Sensitive Data - DO NOT COMMIT!
+.env
+*.env
+!.env.example
+job_application_automation/.env
+job_application_automation/data/.env
+
+# Personal & Sensitive Information
+job_application_automation/data/candidate_profile.json
+job_application_automation/data/sessions/*.json
+job_application_automation/data/sessions/linkedin_cookies.json
+
+# Database Files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+job_application_automation/data/*.db
+job_application_automation/data/vector_indices/
+
+# Logs & State
+*.log
+logs/
+job_application_automation/data/logs/
+job_application_automation/data/*.log
+job_application_automation/data/ats_state.json
+job_application_automation/data/ats_reports/
+
+# Screenshots & Generated Files
+screenshots/
+job_application_automation/data/screenshots/
+job_application_automation/data/generated_cover_letters/
+
+# Job Data
+job_application_automation/data/*job_listings*.json
+job_application_automation/data/combined_job_listings.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary Files
+temp.py
+*.tmp
+*.bak
+*.swp
