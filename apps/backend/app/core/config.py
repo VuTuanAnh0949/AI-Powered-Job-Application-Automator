@@ -30,10 +30,28 @@ class Settings(BaseSettings):
         description="Allowed CORS origins"
     )
     
-    # Database
-    DATABASE_URL: str = Field(
-        default="sqlite:///./data/autoapply.db",
-        description="Database connection URL"
+    # Database - MongoDB
+    MONGODB_URL: str = Field(
+        default="mongodb://localhost:27017",
+        description="MongoDB connection URL"
+    )
+    MONGODB_DB_NAME: str = Field(
+        default="autoapply_ai",
+        description="MongoDB database name"
+    )
+    
+    # Vector Database - Qdrant
+    QDRANT_URL: str = Field(
+        default="http://localhost:6333",
+        description="Qdrant server URL"
+    )
+    QDRANT_API_KEY: str = Field(
+        default="",
+        description="Qdrant API key (for cloud)"
+    )
+    QDRANT_COLLECTION_NAME: str = Field(
+        default="job_embeddings",
+        description="Qdrant collection name"
     )
     
     # AI/LLM

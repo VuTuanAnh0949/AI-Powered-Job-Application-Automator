@@ -9,6 +9,9 @@ import structlog
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.logging import setup_logging
+from app.db.mongodb import database
+from app.db.vector_db import vector_db
+from app.models.mongodb_models import DOCUMENT_MODELS
 
 logger = structlog.get_logger()
 
@@ -17,7 +20,27 @@ logger = structlog.get_logger()
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
     logger.info("🚀 Starting AutoApply AI Backend", version=settings.VERSION)
+    
+    # Initialize MongoDB
+    try:
+        await database.connect()
+        await database.init_beanie(DOCUMENT_MODELS)
+        logger.info("✓ MongoDB initialized")
+    except Exception as e:
+        logger.error("MongoDB initialization failed", error=str(e))
+    
+    # Initialize Vector Database
+    try:
+        await vector_db.connect()
+        logger.info("✓ Vector DB initialized")
+    except Exception as e:
+        logger.error("Vector DB initialization failed", error=str(e))
+    
     yield
+    
+    # Cleanup
+    await database.close()
+    await vector_db.close()
     logger.info("👋 Shutting down AutoApply AI Backend")
 
 

@@ -66,44 +66,6 @@ async def list_applications(
         # Parse status if provided
         status_enum = ApplicationStatus(status) if status else None
         
-        # Get applications
-        applications = await app_service.get_user_applications(
-            user_email=user_email,
-            status=status_enum,
-            limit=limit
-        )
-        
-        # Apply offset
-        applications = applications[offset:offset + limit]
-        
-        # Convert to response format
-        app_list = [
-            Application(
-                id=str(app.id),
-                job_id=str(app.job_id),
-                job_title=app.position,
-                company=app.company,
-                status=app.status.value,
-                applied_date=app.applied_date or app.created_at,
-                last_updated=app.updated_at,
-                resume_path=app.resume_doc_id,
-                cover_letter_path=app.cover_letter_doc_id,
-                notes=app.notes
-            )
-            for app in applications
-        ]
-        
-        return ApplicationListResponse(total=len(app_list), applications=app_list)
-        
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Invalid status: {status}")
-    except Exception as e:
-        logger.error("List applications failed", error=str(e))
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.post("", response_model=Application)
-async def create_application(
     request: CreateApplicationRequest,
     user_email: str = Query(..., description="User email"),
     app_service: ApplicationService = Depends(get_application_service)
@@ -119,30 +81,7 @@ async def create_application(
         app = await app_service.create_application(
             user_email=user_email,
             job_id=request.job_id,
-            notes=request.notes
-        )
-        
-        return Application(
-            id=str(app.id),
-            job_id=str(app.job_id),
-            job_title=app.position,
-            company=app.company,
-            status=app.status.value,
-            applied_date=app.applied_date or app.created_at,
-            last_updated=app.updated_at,
-            resume_path=app.resume_doc_id,
-            cover_letter_path=app.cover_letter_doc_id,
-            notes=app.notes
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        logger.error("Create application failed", error=str(e))
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/{application_id}", response_model=Application)
-async def get_application(
+            notes=request.
     application_id: str,
     app_service: ApplicationService = Depends(get_application_service)
 ):
@@ -207,3 +146,107 @@ async def get_application_statistics(
     except Exception as e:
         logger.error("Get statistics failed", error=str(e))
         raise HTTPException(status_code=500, detail=str(e))
+            last_updated=app.updated_at,
+            resume_path=app.resume_doc_id,
+            cover_letter_path=app.cover_letter_doc_id,
+            notes=app.notes
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error("Create application failed", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e)
+            Application(
+                id=str(app.id),
+                job_id=str(app.job_id),
+                job_title=app.position,
+                company=app.company,
+                status=app.status.value,
+                applied_date=app.applied_date or app.created_at,
+                last_updated=app.updated_at,
+                resume_path=app.resume_doc_id,
+                cover_letter_path=app.cover_letter_doc_id,
+                notes=app.notes
+            )
+            for app in applications
+        ]
+        
+        return ApplicationListResponse(total=len(app_list), applications=app_list)
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid status: {status}")
+    except Exception as e:
+        logger.error("List applications failed", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("", response_model=Application)
+async def create_application(request: CreateApplicationRequest):
+    """
+    Create a new job application.
+    
+    This will:
+    1. Generate tailored resume and cover letter (if not provided)
+    2. Save application to database
+    3. Track application status
+    """
+    logger.info("Create application", job_id=request.job_id)
+    
+    # TODO: Implement application creation
+    raise HTTPException(status_code=501, detail="Not implemented yet")
+
+
+@router.get("/{application_id}", response_model=Application)
+async def get_application(application_id: str):
+    """Get detailed information about a specific application."""
+    logger.info("Get application", application_id=application_id)
+    
+    # TODO: Implement application retrieval
+    raise HTTPException(status_code=404, detail="Application not found")
+
+
+@router.patch("/{application_id}/status")
+async def update_application_status(application_id: str, status: str):
+    """Update application status."""
+    logger.info("Update application status", application_id=application_id, status=status)
+    
+    # TODO: Implement status update
+    return {"application_id": application_id, "status": status}
+
+
+@router.delete("/{application_id}")
+async def delete_application(application_id: str):
+    """Delete an application."""
+    logger.info("Delete application", application_id=application_id)
+    
+    # TODO: Implement application deletion
+    return {"message": "Application deleted"}
+
+
+@router.get("/stats/summary")
+async def get_application_stats():
+    """
+    Get application statistics and insights.
+    
+    Returns overview of your job search progress:
+    - Applications by status
+    - Success rate
+    - Average response time
+    - Top companies applied to
+    """
+    logger.info("Get application stats")
+    
+    # TODO: Implement statistics calculation
+    return {
+        "total_applications": 0,
+        "by_status": {
+            "draft": 0,
+            "submitted": 0,
+            "in_review": 0,
+            "interview": 0,
+            "rejected": 0,
+            "accepted": 0
+        },
+        "success_rate": 0.0,
+        "avg_response_time_days": 0
+    }
